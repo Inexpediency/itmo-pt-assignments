@@ -1,0 +1,29 @@
+name: 'Test log2'
+
+on:
+  push:
+    paths:
+      - 'homework/recurrent/recurrent.py'
+      - '.github/workflows/log2.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-log2:
+    timeout-minutes: 1
+    name: 'test-log2'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: hw
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest homework/recurrent/recurrent_test.py::test_log2

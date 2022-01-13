@@ -1,0 +1,29 @@
+name: 'Test transfer_file'
+
+on:
+  push:
+    paths:
+      - 'practice/transfer/transfer_file.py'
+      - '.github/workflows/transfer_file.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-transfer-file:
+    timeout-minutes: 1
+    name: 'test-transfer-file'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: practice
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest practice/transfer/transfer_file_test.py

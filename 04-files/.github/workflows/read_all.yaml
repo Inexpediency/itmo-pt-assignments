@@ -1,0 +1,29 @@
+name: 'Test read_all'
+
+on:
+  push:
+    paths:
+      - 'practice/basics/text.py'
+      - '.github/workflows/read_all.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-read-all:
+    timeout-minutes: 1
+    name: 'test-read-all'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: practice
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest practice/basics/text_test.py::test_read_all

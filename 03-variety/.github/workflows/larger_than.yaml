@@ -1,0 +1,29 @@
+name: 'Test larger_than'
+
+on:
+  push:
+    paths:
+      - 'practice/finish_me/finish_me.py'
+      - '.github/workflows/larger_than.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-larger-than:
+    timeout-minutes: 1
+    name: 'test-larger-than'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: practice
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest practice/finish_me/finish_me_test.py::test_larger_than

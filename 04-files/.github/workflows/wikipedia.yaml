@@ -1,0 +1,29 @@
+name: 'Test wikipedia'
+
+on:
+  push:
+    paths:
+      - 'practice/request/wikipedia.py'
+      - '.github/workflows/wikipedia.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-wikipedia:
+    timeout-minutes: 1
+    name: 'test-wikipedia'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: practice
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest requests urllib3 lxml
+      - run: |
+          pytest practice/request/wikipedia_test.py

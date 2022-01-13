@@ -1,0 +1,75 @@
+name: Homework testing
+
+on:
+  push:
+    branches: [ hw ]
+  workflow_dispatch:
+
+jobs:
+  test-pratice:
+    name: testing-practice-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setting up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Installing dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest practice
+
+  test-calculator:
+    name: testing-calculator
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setting up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Installing dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest homework/calculator
+
+  test-oneline-easy:
+    name: testing-oneline-easy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setting up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Installing dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest homework/oneline/oneline_easy_test.py
+
+  test-oneline-hard:
+    name: testing-oneline-hard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setting up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Installing dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest homework/oneline/oneline_hard_test.py

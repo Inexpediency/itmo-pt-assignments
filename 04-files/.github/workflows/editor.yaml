@@ -1,0 +1,29 @@
+name: 'Test editor'
+
+on:
+  push:
+    paths:
+      - 'homework/editor/editor.py'
+      - '.github/workflows/editor.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-editor:
+    timeout-minutes: 1
+    name: 'test-editor'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: homework
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest homework/editor/editor_test.py

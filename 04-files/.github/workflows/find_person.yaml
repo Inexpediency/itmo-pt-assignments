@@ -1,0 +1,29 @@
+name: 'Test find_person'
+
+on:
+  push:
+    paths:
+      - 'practice/basics/binary.py'
+      - '.github/workflows/find_person.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-find-person:
+    timeout-minutes: 1
+    name: 'test-find-person'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: practice
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest practice/basics/binary_test.py::test_find_person

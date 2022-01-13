@@ -1,0 +1,29 @@
+name: 'Test bin_sum_two'
+
+on:
+  push:
+    paths:
+      - 'practice/basics/binary.py'
+      - '.github/workflows/bin_sum_two.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-bin-sum-two:
+    timeout-minutes: 1
+    name: 'test-bin-sum-two'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: practice
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest practice/basics/binary_test.py::test_bin_sum_two

@@ -1,0 +1,29 @@
+name: 'Test swap_case'
+
+on:
+  push:
+    paths:
+      - 'practice/lists_and_strings/strings.py'
+      - '.github/workflows/swap_case.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-swap-case:
+    timeout-minutes: 1
+    name: 'test-swap-case'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: practice
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest practice/lists_and_strings/strings_test.py::test_swap_case

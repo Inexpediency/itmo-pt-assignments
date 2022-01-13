@@ -1,0 +1,29 @@
+name: 'Test converter'
+
+on:
+  push:
+    paths:
+      - 'homework/converter/converter.py'
+      - '.github/workflows/converter.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-converter:
+    timeout-minutes: 1
+    name: 'test-converter'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: homework
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest homework/converter/converter_test.py

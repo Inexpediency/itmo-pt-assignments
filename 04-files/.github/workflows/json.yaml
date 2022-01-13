@@ -1,0 +1,29 @@
+name: 'Test json'
+
+on:
+  push:
+    paths:
+      - 'practice/json/json.py'
+      - '.github/workflows/json.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-json:
+    timeout-minutes: 1
+    name: 'test-json'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: practice
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest practice/json/json_test.py

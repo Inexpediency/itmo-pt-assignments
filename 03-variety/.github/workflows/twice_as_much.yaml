@@ -1,0 +1,29 @@
+name: 'Test twice_as_much'
+
+on:
+  push:
+    paths:
+      - 'homework/conditions_and_loops/loops.py'
+      - '.github/workflows/twice_as_much.yaml'
+  workflow_dispatch:
+
+jobs:
+  test-twice-as-much:
+    timeout-minutes: 1
+    name: 'test-twice-as-much'
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: homework
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install pytest
+      - run: |
+          pytest homework/conditions_and_loops/loops_test.py::test_twice_as_much
